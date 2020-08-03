@@ -1,0 +1,5 @@
+App\Entity\Song:
+  song_{1..300}:
+    title: <sentence(4)>
+    track_number: <numberBetween(1, 21)>
+    album: '@album_*'

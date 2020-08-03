@@ -15,7 +15,11 @@
         "webonyx/graphql-php": "^14.0"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.19"
+        "hautelook/alice-bundle": "^2.7",
+        "justinrainbow/json-schema": "^5.2",
+        "symfony/http-client": "5.1.*",
+        "symfony/maker-bundle": "^1.19",
+        "symfony/test-pack": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,

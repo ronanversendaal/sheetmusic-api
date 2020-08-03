@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -7,29 +9,37 @@ use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource
  * @ORM\Entity(repositoryClass=AlbumRepository::class)
  */
 class Album
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album")
+     * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album", orphanRemoval=true)
      */
     private $songs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Artist::class, inversedBy="albums")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $artist;
 
     public function __construct()
     {
@@ -80,6 +90,18 @@ class Album
                 $song->setAlbum(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getArtist(): ?Artist
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(?Artist $artist): self
+    {
+        $this->artist = $artist;
 
         return $this;
     }

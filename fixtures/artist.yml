@@ -1,0 +1,5 @@
+App\Entity\Artist:
+  artist_{1..100}:
+    name: <name()>
+    dateOfBirth: <dateTimeBetween(-30years, -10years)>
+    origin: <country()>
