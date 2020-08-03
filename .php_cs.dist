@@ -4,6 +4,8 @@ return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules(
         [
+            '@DoctrineAnnotation' => true,
+            '@PSR2' => true,
             '@Symfony' => true,
             '@Symfony:risky' => true,
             '@PHP71Migration' => true,
@@ -39,5 +41,6 @@ return PhpCsFixer\Config::create()
     ->setCacheFile(__DIR__.'/.php_cs.cache')
     ->setFinder(
         PhpCsFixer\Finder::create()
-                         ->in(__DIR__)
+            ->in(__DIR__.'/src')
+            ->in(__DIR__.'/tests')
     );
