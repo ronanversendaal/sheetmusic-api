@@ -78,4 +78,9 @@ class Song
 
         return $this;
     }
+
+    public function getDisplayTitle()
+    {
+        return '#'.$this->getTrackNumber().' - '.$this->getTitle();
+    }
 }

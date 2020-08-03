@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\Album;
 use App\Entity\Artist;
 use App\Entity\Song;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -23,7 +26,13 @@ class DashboardController extends AbstractDashboardController
         return parent::index();
     }
 
-    public function configureDashboard() : Dashboard
+    public function configureCrud(): Crud
+    {
+        return parent::configureCrud()
+            ->setPageTitle('index', '%entity_label_plural% listing');
+    }
+
+    public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
             ->setTitle('Admin SheetMusic API')
@@ -56,17 +65,15 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Create new song', 'fa fa-plus', Song::class)->setAction('new'),
         ])->setPermission('ROLE_ADMIN');
 
-
         yield MenuItem::section('Application routes', 'fa fa-smile');
         yield MenuItem::linkToUrl('App frontend', 'fa fa-star', $this->getParameter('app.url_fe'));
         yield MenuItem::linkToRoute('API Platform reference', 'fa fa-book', 'api_doc');
 
-
         yield MenuItem::section();
 
-        if($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN')) {
             // Admin Things here
-            if(!$this->isGranted('IS_IMPERSONATOR')) {
+            if (!$this->isGranted('IS_IMPERSONATOR')) {
                 yield MenuItem::linkToExitImpersonation('Stop impersonation', 'fa fa-user-secret');
             }
         }

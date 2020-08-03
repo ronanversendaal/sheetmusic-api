@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,10 +28,10 @@ class SecurityController extends AbstractController
         return $this->render('@EasyAdmin/page/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
-            'page_title' => "SheetMusic API Login",
+            'page_title' => 'SheetMusic API Login',
             'username_parameter' => 'email',
             'password_parameter' => 'password',
-            'csrf_token_intention' => 'authenticate'
+            'csrf_token_intention' => 'authenticate',
         ]);
     }
 
