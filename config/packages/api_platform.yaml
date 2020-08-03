@@ -1,4 +1,6 @@
 api_platform:
+    title: "Sheetmusic API"
+    description: "An API for searching, filtering, downloading sheetmusic"
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
     patch_formats:
