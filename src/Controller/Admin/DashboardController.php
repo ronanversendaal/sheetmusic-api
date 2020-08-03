@@ -7,9 +7,11 @@ use App\Entity\Artist;
 use App\Entity\Song;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -26,6 +28,18 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle('Admin SheetMusic API')
             ->setFaviconPath('favicon.svg');
+    }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        return parent::configureUserMenu($user)
+            ->displayUserName(false)
+            ->setGravatarEmail($user->getEmail())
+            ->addMenuItems([
+//                Todo create these routes.
+//                MenuItem::linktoRoute('Profile', 'fa fa-user-cog', 'app.settings'),
+//                MenuItem::linktoRoute('Settings', 'fa fa-user-cog', 'app.settings'),
+            ]);
     }
 
     public function configureMenuItems(): iterable
