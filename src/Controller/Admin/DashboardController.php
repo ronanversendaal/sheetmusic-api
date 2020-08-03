@@ -32,17 +32,31 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
 
-        yield MenuItem::section('Music');
-        yield MenuItem::linkToCrud('Albums', 'fa fa-record-vinyl', Album::class)
-            ->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Artists', 'fa fa-users', Artist::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Songs', 'fa fa-music', Song::class);
+        yield MenuItem::subMenu('Music', 'fa fa-music')->setSubItems([
+            MenuItem::linkToCrud('Albums', 'fa fa-record-vinyl', Album::class),
+            MenuItem::linkToCrud('Artists', 'fa fa-users', Artist::class)->setPermission('ROLE_ADMIN'),
+            MenuItem::linkToCrud('Songs', 'fa fa-music', Song::class),
+        ])->setPermission('ROLE_ADMIN');
 
-        yield MenuItem::section('Favorite actions', 'fa fa-star');
-        yield MenuItem::linkToCrud('Create new song', 'fa fa-plus', Song::class)->setAction('new');
+        yield MenuItem::subMenu('Favorite actions', 'fa fa-star')->setSubItems([
+            MenuItem::linkToCrud('Create new song', 'fa fa-plus', Song::class)->setAction('new'),
+        ])->setPermission('ROLE_ADMIN');
+
 
         yield MenuItem::section('Application routes', 'fa fa-smile');
         yield MenuItem::linkToUrl('App frontend', 'fa fa-star', $this->getParameter('app.url_fe'));
         yield MenuItem::linkToRoute('API Platform reference', 'fa fa-book', 'api_doc');
+
+
+        yield MenuItem::section();
+
+        if($this->isGranted('ROLE_ADMIN')) {
+            // Admin Things here
+            if(!$this->isGranted('IS_IMPERSONATOR')) {
+                yield MenuItem::linkToExitImpersonation('Stop impersonation', 'fa fa-user-secret');
+            }
+        }
+
+        yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
     }
 }

@@ -1,0 +1,16 @@
+parameters:
+  adminHash: '$argon2id$v=19$m=65536,t=4,p=1$91viRh9ZH3L48Th4kvaDKQ$nokbzvRLrPtyjuBk3ogc6IcUXhh/LBMeW5cXkNbETtk' #password
+  userHash: '$argon2id$v=19$m=65536,t=4,p=1$91viRh9ZH3L48Th4kvaDKQ$nokbzvRLrPtyjuBk3ogc6IcUXhh/LBMeW5cXkNbETtk' #password
+
+App\Entity\User:
+  user_1:
+    email: ronanversendaal@gmail.com
+    roles:
+      - ROLE_ADMIN
+      - ROLE_USER
+    password: '<{adminHash}>'
+  user_{2..30}:
+    email: '<email()>'
+    roles:
+      - ROLE_USER
+    password: '<{userHash}>'
